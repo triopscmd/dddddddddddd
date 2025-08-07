@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  background-color: #f8fafc; /* light background color */
+  color: #1e293b; /* dark text color */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
