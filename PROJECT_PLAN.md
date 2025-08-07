@@ -1,3 +1,5 @@
+Aquí tienes una revisión del plan de proyecto, identificando los siguientes pasos lógicos y mejoras, manteniendo el formato original y añadiendo la sección de tareas solicitada.
+
 ### Plan de Proyecto Generado
 
 Basado en tu solicitud, aquí está el plan inicial.
@@ -7,7 +9,6 @@ Basado en tu solicitud, aquí está el plan inicial.
 #### 1. Estructura de Carpetas y Archivos
 
 ```bash
-```
 .
 ├── public/
 │   ├── index.html
@@ -51,7 +52,6 @@ Basado en tu solicitud, aquí está el plan inicial.
 ├── tailwind.config.cjs
 ├── tsconfig.json
 └── tsconfig.node.json
-```
 ```
 
 ---
@@ -119,3 +119,25 @@ Basado en tu solicitud, aquí está el plan inicial.
 46. Crear un archivo para funciones de utilidad generales (formateo, validación, etc.). en `src/utils/helpers.ts`
 47. Crear un hook personalizado 'useAuth' para la lógica de autenticación reutilizable. en `src/hooks/useAuth.ts`
 48. Desarrollar un componente de tarjeta para mostrar resúmenes básicos del proyecto. en `src/components/reports/ProjectSummaryCard.tsx`
+
+---
+
+### Plan de Tareas para la Siguiente Iteración
+
+Tras revisar el estado actual del proyecto y la implementación existente, se identifican los siguientes pasos lógicos y mejoras prioritarias para la siguiente iteración:
+
+1.  Integrar `useAuth` hook en `App.tsx` para controlar el flujo de autenticación y el enrutamiento protegido. Modificar la lógica de `isAuthenticated` para que provenga del hook. (`src/App.tsx`, `src/hooks/useAuth.ts`)
+2.  Refactorizar `LoginForm` para utilizar el hook `useAuth` para la autenticación real, reemplazando la lógica de simulación. (`src/components/auth/LoginForm.tsx`, `src/hooks/useAuth.ts`)
+3.  Refactorizar `RegisterForm` para utilizar el hook `useAuth` para el registro, reemplazando la lógica de simulación y la validación duplicada de email/contraseña. (`src/components/auth/RegisterForm.tsx`, `src/hooks/useAuth.ts`)
+4.  Implementar la apertura del `TaskDetailModal` al hacer clic en un `KanbanTaskCard`, pasando la tarea seleccionada. (`src/components/kanban/KanbanTaskCard.tsx`, `src/components/kanban/KanbanBoard.tsx`, `src/components/tasks/TaskDetailModal.tsx`)
+5.  Añadir funcionalidad para crear nuevas tareas desde el `KanbanBoard` o `KanbanColumn`, utilizando el `TaskDetailModal` en modo "creación". (`src/components/kanban/KanbanColumn.tsx`, `src/components/kanban/KanbanBoard.tsx`, `src/components/tasks/TaskDetailModal.tsx`, `src/store/tasks/tasksStore.ts`)
+6.  Implementar la lógica de guardar/actualizar tareas en `TaskDetailModal` que interactúe con el `useTaskStore`. (`src/components/tasks/TaskDetailModal.tsx`, `src/store/tasks/tasksStore.ts`)
+7.  Ajustar `TaskDetailModal` para recibir un `task` opcional (`Task | null`) para diferenciar entre creación y edición. (`src/components/tasks/TaskDetailModal.tsx`)
+8.  Actualizar dinámicamente `tasksCount` y `completedTasksCount` en el `projectsStore` cuando se añadan, actualicen o eliminen tareas en el `tasksStore`. Esto podría requerir que las acciones de `tasksStore` notifiquen al `projectsStore` o que el `ProjectDetailPage` recupere datos agregados. (`src/store/tasks/tasksStore.ts`, `src/store/projects/projectsStore.ts`, `src/pages/ProjectDetailPage.tsx`)
+9.  Centralizar la definición de tipos para formularios (`ProjectFormData`, `TaskFormData`) en un archivo común, por ejemplo, `src/typings.d.ts` o un nuevo `src/types/index.ts`. (`src/pages/ProjectsPage.tsx`, `src/components/projects/ProjectFormModal.tsx`, `src/components/tasks/TaskDetailModal.tsx`, `src/store/projects/projectsStore.ts`, `src/store/tasks/tasksStore.ts`, `src/typings.d.ts` o `src/types/index.ts`)
+10. Desarrollar el módulo de informes, creando la página `ReportsPage.tsx` y el `ProjectSummaryCard` moviéndolo a su ubicación final o adaptándolo para el contexto de informes. Habilitar la ruta en `App.tsx` y el enlace en `Sidebar`. (`src/pages/ReportsPage.tsx`, `src/components/reports/ProjectSummaryCard.tsx`, `src/App.tsx`, `src/components/layout/Sidebar.tsx`)
+11. Implementar funcionalidad de arrastrar y soltar (Drag & Drop) en el tablero Kanban para mover tareas entre columnas, actualizando su estado en el `tasksStore`. (`src/components/kanban/KanbanBoard.tsx`, `src/components/kanban/KanbanColumn.tsx`, `src/components/kanban/KanbanTaskCard.tsx`, `src/store/tasks/tasksStore.ts`)
+12. Considerar la implementación de componentes UI genéricos (ej. `Button`, `Input`, `ModalBase`) dentro de `src/components/ui/` para promover la reutilización y consistencia en la interfaz. (`src/components/ui/`, varios componentes de formulario/modal)
+13. Extender la persistencia de datos del `localStorageService` para almacenar el estado de los proyectos y tareas (además de la autenticación) para que los mocks no se pierdan al recargar. (`src/store/projects/projectsStore.ts`, `src/store/tasks/tasksStore.ts`, `src/utils/localStorageService.ts`)
+14. Implementar un sistema de notificaciones (ej. toasts) para mostrar mensajes de éxito/error de manera más amigable al usuario (ej. al iniciar sesión, registrarse, crear/editar/eliminar proyectos o tareas). (`src/App.tsx`, `src/components/common/NotificationToast.tsx` - nuevo, `src/hooks/useAuth.ts`, `src/store/projects/projectsStore.ts`, `src/store/tasks/tasksStore.ts`)
+15. Crear el archivo `src/store/index.ts` para exportar centralizadamente los stores de Zustand, si se planea tener muchos, facilitando su importación. (`src/store/index.ts`, `src/App.tsx`, `src/hooks/useAuth.ts`, etc.)
